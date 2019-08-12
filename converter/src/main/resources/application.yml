@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: converter
+server:
+  port: 8082
+eureka:
+  client:
+    initial-instance-info-replication-interval-seconds: 2
+    #    Indicates how often(in seconds) to replicate instance changes to be replicated to the eureka server.
+    instance-info-replication-interval-seconds: 1
+    #    Indicates how often(in seconds) to fetch the registry information from the eureka server.
+    registry-fetch-interval-seconds: 1

@@ -26,7 +26,7 @@ public class EstimationController {
         int hours = generateTime();
         LOG.debug("I think it would take {} hours.", hours);
 
-        Integer receivedValue = restTemplate.getForObject("http://localhost:8081/convert/" + hours, Integer.class);
+        Integer receivedValue = restTemplate.getForObject("http://converter/convert/" + hours, Integer.class);
 
         String result = "Let it be " + receivedValue + " story points.";
         LOG.debug(result);
