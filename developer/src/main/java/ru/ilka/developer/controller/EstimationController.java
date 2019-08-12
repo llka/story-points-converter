@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import ru.ilka.developer.circuitbreaker.ConverterCaller;
 
 import java.util.Random;
 
@@ -16,17 +16,17 @@ import java.util.Random;
 public class EstimationController {
     private static final Logger LOG = LogManager.getLogger(EstimationController.class);
 
-    private final int[] intervals = {1, 2, 4, 8, 16, 80};
+    private final int[] INTERVALS = {1, 2, 4, 8, 16, 80};
 
     @Autowired
-    private RestTemplate restTemplate;
+    private ConverterCaller converterCaller;
 
     @GetMapping
     public String getEstimation() {
         int hours = generateTime();
         LOG.debug("I think it would take {} hours.", hours);
 
-        Integer receivedValue = restTemplate.getForObject("http://converter/convert/" + hours, Integer.class);
+        Integer receivedValue = converterCaller.calculateStoryPoints(hours);
 
         String result = "Let it be " + receivedValue + " story points.";
         LOG.debug(result);
@@ -35,6 +35,6 @@ public class EstimationController {
     }
 
     private int generateTime() {
-        return intervals[new Random().nextInt(intervals.length)];
+        return INTERVALS[new Random().nextInt(INTERVALS.length)];
     }
 }
