@@ -5,7 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import ru.ilka.developer.client.ConverterClient;
 
 @Service
 public class ConverterCaller {
@@ -13,11 +13,11 @@ public class ConverterCaller {
     private static final int DEFAULT_ESTIMATE = 42;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private ConverterClient converterClient;
 
     @HystrixCommand(fallbackMethod = "fallback")
     public Integer calculateStoryPoints(int hours) {
-        return restTemplate.getForObject("http://converter/convert/" + hours, Integer.class);
+        return converterClient.convertHoursToStoryPoints(hours);
     }
 
     private Integer fallback(int hours) {

@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>eureka</module>
         <module>developer</module>
         <module>converter</module>
     </modules>
